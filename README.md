@@ -1,5 +1,7 @@
 # A* – optimal und informiert – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-astar-demo.streamlit.app/)**
+
 Zweites Stück der **Heuristische-Baumsuche-Linie** der "Konzepte"-Reihe für die Website "Sebastian Hanisch – Operations Research und Machine Learning" - die direkte Antwort auf die Schwäche der Wurzel [greedy-best-first-demo](../greedy-best-first-demo): **Greedy Best-First Search (GBFS)** wählt den nächsten Knoten nur nach der Heuristik h(n) und ignoriert den bisherigen Pfadwert g(n) - schnell, aber nicht optimal. **A\*** (Hart, Nilsson & Raphael 1968) wählt nach **f(n) = g(n) + h(n)** und ist mit einer zulässigen Heuristik beweisbar optimal.
 
 **Einordnung in die Linie:** derselbe Graph, dieselbe Instanz, derselbe Suchkern wie in der Wurzel (`_search`, dort schon korrektheitsgeprüft) - A\* ist dort nur eine **dritte Prioritätsformel**. Verglichen werden drei Suchen: GBFS (schnell, nicht optimal), A\* (die Behauptung: beides) und Uniform-Cost-Search (UCS, optimal, ohne Richtungsinformation - die Referenz).
