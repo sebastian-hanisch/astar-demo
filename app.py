@@ -71,8 +71,8 @@ vollständig?
 )
 st.caption(
     "Setzt direkt auf der Wurzel auf ([greedy-best-first-demo](https://github.com/sebastian-hanisch/greedy-best-first-demo)): "
-    "derselbe Graph, dieselbe Instanz, derselbe Suchkern - A* ist dort nur eine dritte Prioritätsformel. Noch nicht "
-    "gebaute Geschwister: Beam Search → {Diverse Beam Search, Monobeam}, Iterative Deepening A* (IDA*), Monte Carlo "
+    "derselbe Graph, dieselbe Instanz, derselbe Suchkern - A* ist dort nur eine dritte Prioritätsformel. Weitere "
+    "Geschwister: Beam Search → {Diverse Beam Search, Monobeam}, Iterative Deepening A* (IDA*), Monte Carlo "
     "Tree Search (MCTS), Beam Search + A* → Beam Stack Search."
 )
 
@@ -250,6 +250,6 @@ Implementiert in `astar_algorithm.py` (gemeinsamer Suchkern `_search`, dritter W
 st.markdown("---")
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Heuristische Baumsuche: Greedy bis MCTS](https://sebastianhanisch.net/konzepte-heuristische-baumsuche.html)."
 )

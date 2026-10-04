@@ -8,10 +8,10 @@ Zweites Stück der **Heuristische-Baumsuche-Linie** der "Konzepte"-Reihe für di
 
 ```
 Greedy Best-First Search (Wurzel)                                                          [gebaut]
- ├─ A* → Iterative Deepening A* (IDA*)                                     [A* = DIESES STÜCK, IDA* nicht gebaut]
- ├─ Beam Search → {Diverse Beam Search, Monobeam}                                          [nicht gebaut]
- └─ Monte Carlo Tree Search (MCTS)                                                         [nicht gebaut]
-Beam Search + A* → Beam Stack Search (Konvergenzpunkt)                                     [nicht gebaut]
+ ├─ A* → Iterative Deepening A* (IDA*)                                     [A* = DIESES STÜCK, IDA* gebaut]
+ ├─ Beam Search → {Diverse Beam Search, Monobeam}                                          [gebaut]
+ └─ Monte Carlo Tree Search (MCTS)                                                         [gebaut]
+Beam Search + A* → Beam Stack Search (Konvergenzpunkt)                                     [gebaut]
 ```
 
 Ergebnis in Kürze: **A\* ist ausnahmslos optimal** (Lücke 0.0 % in jedem gemessenen Fall) und expandiert nie mehr Knoten als UCS - aber die Vorab-Hypothese "A\* behält den Großteil von GBFS' Effizienzvorsprung" ist **widerlegt**: im Standardfall behält er nur **32 %** (1.38x weniger Expansionen als UCS, GBFS erreicht 4.99x). Und er wächst nicht mit der Instanzgröße: bei GBFS steigt der Vorsprung von 2.8x auf 8.5x, bei A\* bleibt er bei ~1.4x. Der gemessene Grund: die geradlinige Heuristik ist auf diesen Vierer-Rastern **locker** (h(Start) liegt bei nur 0.81 bis 0.61 des wahren Weges), A\* muss deshalb ein breites Gebiet erkunden.
@@ -106,6 +106,4 @@ pytest tests/ -v
 
 ---
 
-Teil des [Operations-Research-Demo-Portfolios](https://sebastianhanisch.net/demos.html) von
-[Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning.
-Interesse an einer maßgeschneiderten Lösung? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Heuristische Baumsuche: Greedy bis MCTS](https://sebastianhanisch.net/konzepte-heuristische-baumsuche.html).
