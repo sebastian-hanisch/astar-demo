@@ -63,8 +63,8 @@ class Analysis:
     @property
     def tightness(self):
         """Wie eng die Heuristik am Start ist: h(Start) / tatsächlicher kürzester Weg (1.0 = perfekt, kleiner =
-        lockerer). Eine lockere Heuristik zwingt A*, ein breites Gebiet zu erkunden - der gemessene Grund dafür,
-        dass A* auf diesen Rastern nur einen Teil von GBFS' Effizienzvorsprung behält."""
+        lockerer). Die Messungen sprechen dafür, dass eine lockere Heuristik die Suche verbreitert und A* auf diesen
+        Rastern deshalb nur einen Teil von GBFS' Effizienzvorsprung behält (die Heuristik wird nicht kontrolliert variiert)."""
         if not self.ucs.path or self.ucs.cost <= 0:
             return float("nan")
         h = A.heuristic(self.inst.graph.xy, self.inst.goal)

@@ -69,6 +69,19 @@ Uniform-Cost-Search UND den Effizienzvorsprung der Greedy-Suche? Oder kostet die
 vollständig?
 """
 )
+
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/a-stern-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Stellen Sie sich einen Lieferwagen vor, der in einem Viertel mit gesperrten Straßen den kürzesten Weg zu einem Kunden sucht. An jeder Stelle muss die Suche entscheiden, welche Kreuzung sie als Nächstes ansieht. Wählt sie nur nach der geschätzten Luftlinie zum Ziel, ist sie schnell, kann aber in Sackgassen laufen und einen Umweg liefern. Wählt sie nur nach dem bisherigen Weg, findet sie die kürzeste Strecke, sieht sich aber in alle Richtungen um.
+
+Das Verfahren A* addiert beides: bisheriger Weg plus geschätzte Luftlinie. Solange die Schätzung nie größer ist als der wahre Rest, ist der gefundene Weg der kürzeste. Die Demo vergleicht die drei Regeln auf demselben Netz und zeigt, wie viel vom Tempo der reinen Zielsuche A* behält.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/a-stern-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
 st.caption(
     "Setzt direkt auf der Wurzel auf ([greedy-best-first-demo](https://github.com/sebastian-hanisch/greedy-best-first-demo)): "
     "derselbe Graph, dieselbe Instanz, derselbe Suchkern - A* ist dort nur eine dritte Prioritätsformel. Weitere "
@@ -164,7 +177,7 @@ m2.metric("A*: Effizienz", f"{a.astar_ratio:.2f}x", delta=f"{a.astar.expansions}
 m3.metric("GBFS: Effizienz", f"{a.gbfs_ratio:.2f}x", delta=f"{a.gbfs.expansions} vs. {a.ucs.expansions} Expansionen", delta_color="off")
 kept = a.kept_share
 m4.metric("Behaltener Vorsprung", "-" if kept != kept else f"{kept:.0f} %", delta=f"Heuristik-Enge {a.tightness:.2f}", delta_color="off")
-st.caption("**Lücke:** Optimalitätslücke ggü. UCS. **Effizienz:** Effizienzverhältnis. **Heuristik-Enge:** h(Start) / tatsächlicher kürzester Weg (1.0 = perfekt). Je lockerer, desto breiter muss A* suchen.")
+st.caption("**Lücke:** Optimalitätslücke ggü. UCS. **Effizienz:** Effizienzverhältnis. **Heuristik-Enge:** h(Start) / tatsächlicher kürzester Weg (1.0 = perfekt). Eine lockere Heuristik geht in der Demo mit breiterer Suche einher (die Heuristik wird nicht kontrolliert variiert).")
 
 st.markdown("---")
 
@@ -223,6 +236,26 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/a-stern-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind ein Raster mit Hindernissen, ein Start und ein Ziel. Gesucht ist ein kürzester Weg; verglichen wird, wie viele Knoten drei Suchen dafür expandieren (ansehen und ihre Nachbarn auf die Merkliste setzen).
+
+| Symbol | Bedeutung |
+|---|---|
+| $n$ | Knoten (Kreuzung) im Raster |
+| $xy_n$ | Koordinaten des Knotens $n$ |
+| $g(n)$ | Kosten des bisher gefundenen Wegs vom Start bis $n$ |
+| $h(n)$ | Heuristik: geschätzter Restweg von $n$ zum Ziel (hier die Luftlinie) |
+| $h^*(n)$ | wahrer kürzester Restweg von $n$ zum Ziel |
+| $f(n)$ | Priorität, nach der die Suche den nächsten Knoten wählt |
+| $E_{\text{UCS}}$, $E_{\text{A*}}$, $E_{\text{GBFS}}$ | Zahl der Knoten-Expansionen der jeweiligen Suche |
+| $L_{\text{opt}}$ | Länge des tatsächlich kürzesten Wegs |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/a-stern-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Heuristik.** $h(n) = \lVert xy_n - xy_{\text{Ziel}} \rVert_2$ - zulässig, da Kantengewichte echte euklidische

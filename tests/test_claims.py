@@ -67,6 +67,15 @@ def test_a_star_keeps_only_a_minority_of_the_gbfs_advantage():
         assert cfg(**kw)["kept_share"] < 50.0, kw
 
 
+def test_kept_share_range_over_both_sweeps():
+    """README: Spanne 32-44 % über die Punkte beider Sweeps; astar_constants: sinkt bei großen Rastern von 41 auf 32 %."""
+    values = [r["kept_share"] for param in ("obstacle_pct", "side") for r in ev.sweep(param)]
+    near(min(values), 32.0, 1.5)
+    near(max(values), 44.0, 1.5)
+    near(cfg(side=6)["kept_share"], 41.0, 1.5)
+    near(cfg(side=22)["kept_share"], 32.0, 1.5)
+
+
 def test_a_star_is_far_less_efficient_than_gbfs_everywhere():
     for kw in (dict(), dict(obstacle_pct=0), dict(obstacle_pct=40), dict(side=6), dict(side=22)):
         row = cfg(**kw)

@@ -26,11 +26,11 @@ OBSTACLE_SWEEP = (0, 10, 20, 30, 40)
 #   bricht erst bei 40 % ein.
 # GRÖSSEN-SWEEP (Rastergröße 6/10/14/18/22): A*-Effizienzverhältnis 1.38/1.45/1.56/1.46/1.39x - WÄCHST NICHT mit der
 #   Größe (GBFS: 2.8 bis 8.5x), behaltener Anteil sinkt bei großen Rastern (41 bis 32 %).
-# WARUM (gemessen, nicht nur vermutet): die geradlinige Heuristik ist auf diesen Vierer-Rastern LOCKER - h(Start)
-#   liegt im Mittel bei nur 0.81 (offenes Feld) bis 0.61 (40 % Hindernisse) des tatsächlichen kürzesten Wegs. Eine
-#   lockere Heuristik zwingt A*, ein breites Gebiet zu erkunden. Untergrenze im Test: mit dem EXAKTEN Restweg als h
-#   würde A* nur die Knoten des optimalen Pfads expandieren (tests/test_algorithm.py) - A* ist hier durch die
-#   Heuristik-Qualität begrenzt, nicht durch den Algorithmus.
+# WARUM (die Messungen sprechen dafür; die Heuristik wird nicht kontrolliert variiert): die geradlinige Heuristik ist auf diesen Vierer-Rastern LOCKER - h(Start)
+#   liegt im Mittel bei nur 0.81 (offenes Feld) bis 0.61 (40 % Hindernisse) des tatsächlichen kürzesten Wegs. Mit
+#   einer lockeren Heuristik erkundet A* ein breites Gebiet. Untergrenze im Test: mit dem EXAKTEN Restweg als h
+#   würde A* nur die Knoten des optimalen Pfads expandieren (tests/test_algorithm.py) - A* ist hier vermutlich durch
+#   die Heuristik-Qualität begrenzt, nicht durch den Algorithmus.
 # EFFIZIENZ-FRAGE (A* nie schlechter als UCS?): in allen getesteten Instanzen expandiert A* höchstens so viele Knoten
 #   wie UCS (60 Zufallsinstanzen im Test plus alle Sweep-Instanzen) - für eine zulässige Heuristik erwartet, hier
 #   aber gemessen.

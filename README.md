@@ -14,15 +14,15 @@ Greedy Best-First Search (Wurzel)                                               
 Beam Search + A* → Beam Stack Search (Konvergenzpunkt)                                     [gebaut]
 ```
 
-Ergebnis in Kürze: **A\* ist ausnahmslos optimal** (Lücke 0.0 % in jedem gemessenen Fall) und expandiert nie mehr Knoten als UCS - aber die Vorab-Hypothese "A\* behält den Großteil von GBFS' Effizienzvorsprung" ist **widerlegt**: im Standardfall behält er nur **32 %** (1.38x weniger Expansionen als UCS, GBFS erreicht 4.99x). Und er wächst nicht mit der Instanzgröße: bei GBFS steigt der Vorsprung von 2.8x auf 8.5x, bei A\* bleibt er bei ~1.4x. Der gemessene Grund: die geradlinige Heuristik ist auf diesen Vierer-Rastern **locker** (h(Start) liegt bei nur 0.81 bis 0.61 des wahren Weges), A\* muss deshalb ein breites Gebiet erkunden.
+Ergebnis in Kürze: **A\* ist ausnahmslos optimal** (Lücke 0.0 % in jedem gemessenen Fall) und expandiert nie mehr Knoten als UCS - aber die Vorab-Hypothese "A\* behält den Großteil von GBFS' Effizienzvorsprung" ist **widerlegt**: im Standardfall behält er nur **32 %** (1.38x weniger Expansionen als UCS, GBFS erreicht 4.99x). Und er wächst nicht mit der Instanzgröße: bei GBFS steigt der Vorsprung von 2.8x auf 8.5x, bei A\* bleibt er bei ~1.4x. Die Messungen sprechen für diese Erklärung: die geradlinige Heuristik ist auf diesen Vierer-Rastern **locker** (h(Start) liegt bei nur 0.81 bis 0.61 des wahren Weges) und A\* erkundet ein breites Gebiet; die Heuristik selbst wird in der Demo nicht kontrolliert variiert.
 
 | Frage | Ergebnis (Rastergröße 12, Hindernisdichte 15 %, sofern nicht anders angegeben; Mittel über 5 feste Instanzen, Seeds 100000–100004; vollständig deterministisch) |
 |---|---|
-| **Ist A\* optimal?** | ✅ Lücke **0.0 %** bei jeder Hindernisdichte und jeder Rastergröße |
+| **Ist A\* optimal?** | ✅ Lücke **0.0 %** bei jeder Hindernisdichte und jeder Rastergröße (GBFS im Standardfall im Mittel 16.5 % Lücke) |
 | **Behält A\* GBFS' Effizienzvorsprung?** | ⚠️ nur **32 %** im Standardfall (37/41/43/44/34 % über 0–40 % Hindernisse) - Verhältnis ggü. UCS **1.38x** gegen GBFS **4.99x** (Expansionen 90 gegen 24 gegen 121) |
 | **Hindernisdichte-Sweep (0/10/20/30/40 %)** | ⚠️ A\*-Verhältnis **1.47/1.52/1.54/1.49/1.20x** - flach bis 30 %, bricht erst bei 40 % ein (GBFS: 6.26/5.58/4.55/3.21/1.92x, monoton fallend) |
 | **Rastergrößen-Sweep (6/10/14/18/22)** | ⚠️ A\*-Verhältnis **1.38/1.45/1.56/1.46/1.39x** - wächst NICHT (GBFS: 2.8/4.1/6.0/7.7/8.5x) |
-| **Warum? Heuristik-Enge** | h(Start) / wahrer Weg = **0.81** (0 % Hindernisse), **0.76** (15 %), **0.61** (40 %) - je lockerer, desto breiter sucht A\* |
+| **Warum? Heuristik-Enge** | h(Start) / wahrer Weg = **0.81** (0 % Hindernisse), **0.76** (15 %), **0.61** (40 %) - die Messungen sprechen dafür, dass eine lockere Heuristik die Suche verbreitert (die Heuristik wird nicht kontrolliert variiert) |
 | **Expandiert A\* je mehr Knoten als UCS?** | ✅ NIE (60 Zufallsinstanzen im Test plus alle Sweep-Instanzen) |
 | **Handgebaute Heuristik-Falle** | ✅ GBFS 7.47 % zu lang (6 Expansionen), A\* und UCS beide optimal (7 bzw. 8) |
 
@@ -56,9 +56,9 @@ Die einzelne Instanz (Seed 35) weicht von den Sweep-Mitteln ab (z. B. Standardfa
 
 ## Was nicht funktioniert hat / Grenzen
 
-- **Vorab-Hypothese "A\* behält den Großteil von GBFS' Effizienzvorsprung" - WIDERLEGT.** Im Mittel nur 32 % (Spanne 32-44 % über die Sweeps). Die Optimalitätsgarantie kostet den größeren Teil des Vorsprungs.
+- **Vorab-Hypothese "A\* behält den Großteil von GBFS' Effizienzvorsprung" - WIDERLEGT.** Im Mittel nur 32 % (Spanne 32-44 % über die Punkte beider Sweeps, Hindernisdichte und Rastergröße). Die Optimalitätsgarantie kostet den größeren Teil des Vorsprungs.
 - **A\*s Vorsprung wächst nicht mit der Instanzgröße** (1.38x bei Größe 6, 1.39x bei 22), GBFS' schon (2.8x bis 8.5x) - der Vorsprung wächst mit der Größe nur, wenn man auf die Optimalitätsgarantie verzichtet.
-- **Der gemessene Grund ist die Heuristik-Qualität, nicht der Algorithmus**: h(Start) liegt bei 0.81 (offenes Feld) bis 0.61 (40 % Hindernisse) des wahren Wegs. Untergrenze (im Test, eine Instanz): mit dem EXAKTEN Restweg als h expandiert A\* nur die Knoten des optimalen Pfads - dazwischen liegt der ganze Spielraum besserer Heuristiken, die hier nicht gebaut werden.
+- **Die Messungen sprechen dafür, dass die Heuristik-Qualität die Suche begrenzt, nicht der Algorithmus**: h(Start) liegt bei 0.81 (offenes Feld) bis 0.61 (40 % Hindernisse) des wahren Wegs. Kontrolliert variiert wird die Heuristik nicht, getestet sind nur die Sonderfälle h ≡ 0 und h = h* (eine Instanz). Untergrenze (im Test, eine Instanz): mit dem EXAKTEN Restweg als h expandiert A\* nur die Knoten des optimalen Pfads - dazwischen liegt der ganze Spielraum besserer Heuristiken, die hier nicht gebaut werden.
 - **Anders als bei GBFS sinkt A\*s Vorsprung nicht monoton mit den Hindernissen**: flach bis 30 %, Einbruch bei 40 % (dort ist die Heuristik am lockersten).
 - **Speicher ist unbegrenzt**: A\* hält die gesamte Grenzmenge - auf riesigen Graphen das eigentliche Problem (das Thema des nächsten Kindes dieses Zweigs, IDA\*).
 - **Synthetische Instanzen:** ein Raster mit Jitter, Vierer-Nachbarschaft (keine Diagonalen), keine Zeitfenster, keine gerichteten Kanten.
